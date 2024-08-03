@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
   document
-    .querySelector('.search-button')
+    .getElementById('searchForm')
     .addEventListener('submit', function (e) {
       e.preventDefault();
-      const query = document.querySelector('.search-input').value;
+      const query = document.getElementById('searchQuery').value;
       searchImages(query);
     });
 });
@@ -14,11 +14,10 @@ function searchImages(query) {
     query
   )}&image_type=photo&orientation=horizontal&safesearch=true`;
 
-  document.querySelector('#loader').style.display = 'block';
+  document.getElementById('loader').style.display = 'block';
 
   fetch(url)
     .then(response => response.json())
-    .then(console.log(response))
     .then(data => {
       document.getElementById('loader').style.display = 'none';
       if (data.hits.length > 0) {
@@ -27,7 +26,7 @@ function searchImages(query) {
         iziToast.info({
           title: 'Informacja',
           message:
-            'Sorry, there are no images matching your search query. Please try again!',
+            'Przepraszamy, nie ma obrazów zgodnych z wyszukiwaniem. Spróbuj ponownie!',
           position: 'topRight',
         });
       }
@@ -57,8 +56,29 @@ function displayImages(images) {
     imgElement.src = image.webformatURL;
     imgElement.alt = image.tags;
 
-    aElement.appendChild(imgElement);
+    const infoDiv = document.createElement('div');
+    infoDiv.classList.add('image-info');
+    infoDiv.innerHTML = `
+            <div>
+                <span class="label">Likes:</span>
+                <span>${image.likes}</span>
+            </div>
+            <div>
+                <span class="label">Views:</span>
+                <span>${image.views}</span>
+            </div>
+            <div>
+                <span class="label">Comments:</span>
+                <span>${image.comments}</span>
+            </div>
+            <div>
+                <span class="label">Downloads:</span>
+                <span>${image.downloads}</span>
+            </div>
+        `;
     gallery.appendChild(aElement);
+    aElement.appendChild(imgElement);
+    aElement.appendChild(infoDiv);
   });
 
   const lightbox = new SimpleLightbox('#gallery a', {});
