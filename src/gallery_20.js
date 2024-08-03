@@ -14,7 +14,10 @@ function searchImages(query) {
     query
   )}&image_type=photo&orientation=horizontal&safesearch=true`;
 
-  document.getElementById('loader').style.display = 'block';
+  document.getElementById('loader').style.display = 'flex';
+
+  const gallery = document.getElementById('gallery');
+  gallery.innerHTML = '';
 
   fetch(url)
     .then(response => response.json())
