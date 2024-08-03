@@ -27,7 +27,7 @@ function searchImages(query) {
         iziToast.info({
           title: 'Informacja',
           message:
-            'Przepraszamy, nie ma obrazów zgodnych z wyszukiwaniem. Spróbuj ponownie!',
+            'Sorry, there are no images matching your search query. Please try again!',
           position: 'topRight',
         });
       }
